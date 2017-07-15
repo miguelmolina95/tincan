@@ -1,8 +1,16 @@
 from __future__ import with_statement   # Only necessary for Python 2.5
 from flask import Flask, request, redirect
 from twilio.twiml.voice_response import VoiceResponse, Gather
+from twilio.twiml.messaging_response import MessagingResponse
+from twilio.rest import Client
+from tinydb import TinyDB, Query
 
 app = Flask(__name__)
+db = TinyDB('db.json')
+
+account_sid = "REPLACE"
+auth_token = "REPLACE"
+client = Client(account_sid, auth_token)
 
 callers = {
     "+14158675311": "Virgil",
@@ -11,8 +19,28 @@ callers = {
     "+14158675312": "Marcel"
 }
 
-@app.route("/", methods=['GET', 'POST'])
-def hello_monkey():
+@app.route("/sms", methods=['GET', 'POST'])
+def incoming_sms():
+    """Send a dynamic reply to an incoming text message"""
+    # Get the message the user sent our Twilio number
+    body = request.values.get('Body', None).lower()
+
+    # Start our TwiML response
+    resp = MessagingResponse()
+
+    # Determine the right reply for this message
+    if body == 'call':
+        resp.message("Alright! We're going to connect you with someone as soon as possible. We'll send some conversation starters, and we'll call you when we're ready!")
+        resp.message('CONVERSATION STARTERS: What is your neighborhood like?')
+    elif body == 'start':
+        resp.message("Welcome to TinCan! When you're ready to start a call, please text the word CALL.")
+    else:
+        resp.message("Sorry, I didn't understand that.")
+
+    return str(resp)
+
+@app.route("/call", methods=['GET', 'POST'])
+def call():
     from_number = request.values.get('From', None)
     if from_number in callers:
         caller = callers[from_number]
