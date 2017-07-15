@@ -2,22 +2,8 @@ from __future__ import with_statement   # Only necessary for Python 2.5
 from flask import Flask, request, redirect
 from twilio.twiml.voice_response import VoiceResponse, Gather
 from twilio.twiml.messaging_response import MessagingResponse
-from twilio.rest import Client
-from tinydb import TinyDB, Query
 
 app = Flask(__name__)
-db = TinyDB('db.json')
-
-account_sid = "REPLACE"
-auth_token = "REPLACE"
-client = Client(account_sid, auth_token)
-
-callers = {
-    "+14158675311": "Virgil",
-    "+14158675309": "Curious George",
-    "+14158675310": "Boots",
-    "+14158675312": "Marcel"
-}
 
 @app.route("/sms", methods=['GET', 'POST'])
 def incoming_sms():
@@ -42,14 +28,10 @@ def incoming_sms():
 @app.route("/call", methods=['GET', 'POST'])
 def call():
     from_number = request.values.get('From', None)
-    if from_number in callers:
-        caller = callers[from_number]
-    else:
-        caller = "Tin Can User"
 
     resp = VoiceResponse()
     # Greet the caller by name
-    resp.say("Hello " + caller)
+    resp.say("Hello user")
 
     # Say a command, and listen for the caller to press a key. When they press
     # a key, redirect them to /handle-key.
