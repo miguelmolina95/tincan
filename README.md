@@ -27,4 +27,14 @@ why:
 
 ## Authors:
 
+Teresa Ibarra - _Frontend_
+
+Samuel Yanez - _Frontend_
+
+Miguel Molina - _Backend_
+
+Bianca Colon - _Backend_
+
+Michael A - _Backend_
+
 ## Acknowledgments:
