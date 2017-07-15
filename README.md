@@ -1,4 +1,5 @@
 # TinCan
+![logo](https://user-images.githubusercontent.com/7967489/28242531-746e64b2-6963-11e7-9aff-6f03324ba9aa.png)
 
 An application that connects immigrants who want to practice English with their peers.
 TinCan connects people at the same level of language fluency anonymously to talk over the phone and practice speaking to other people.
