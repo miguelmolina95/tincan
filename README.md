@@ -13,6 +13,29 @@ when:
 
 why: 
 
+## Prerequisites:
+
+[Install virtualenv and virtualenvwrapper](http://exponential.io/blog/2015/02/10/install-virtualenv-and-virtualenvwrapper-on-mac-os-x/) 
+```
+To make the env directory run this command at the project’s root:
+$ virtualenv env 
+
+To start the virtual environment:
+$ source env/bin/activate
+
+
+Once you are in the virutalenv:
+
+To run the app locally:
+$ dev_appserver.py app.yaml
+
+To deploy:
+$ gcloud app deploy
+
+To get out of virutalenv: 
+$ deactivate
+```
+
 ## Non-MVP Mockup:
 
 ![sms_v1](https://user-images.githubusercontent.com/7967489/28241582-324735a8-694c-11e7-8966-57f07da134fc.png)
