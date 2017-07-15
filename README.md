@@ -15,6 +15,8 @@ why:
 
 ## Prerequisites:
 
+[SDK](https://cloud.google.com/sdk/docs/) for google app engine.
+
 [Install virtualenv and virtualenvwrapper](http://exponential.io/blog/2015/02/10/install-virtualenv-and-virtualenvwrapper-on-mac-os-x/) 
 ```
 To make the env directory run this command at the project’s root:
@@ -27,7 +29,7 @@ $ source env/bin/activate
 Once you are in the virutalenv:
 
 To run the app locally:
-$ dev_appserver.py app.yaml
+$ dev_app server.py app.yaml
 
 To deploy:
 $ gcloud app deploy
