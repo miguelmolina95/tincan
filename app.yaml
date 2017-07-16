@@ -6,6 +6,17 @@ threadsafe: true
 handlers:
 - url: /static
   static_dir: static
+- url: /templates
+  static_dir: templates
+  application_readable: true
+- url: /templates/css
+  static_dir: templates/css
+- url: /templates/img
+  static_dir: templates/img
+- url: /templates/lib
+  static_dir: templates/lib
+- url: /templates/js
+  static_dir: templates/js
 - url: /.*
   script: main.app
 
