@@ -549,9 +549,24 @@ body {
     max-width: none;
   }
   .center {
-    margin-top: 8em;
+    margin-top: 5em;
   }
   .text-to-start div h3 {
     font-size: 2em;
   }
+}
+
+.navbar-brand img {
+  width: 25px;
+  display: inline-block;
+  margin-right: 0.25em;
+}
+
+.icon-bubble {
+  font-size: 12em !important;
+}
+
+.fa-github {
+  font-size: 1.75em;
+  vertical-align: middle;
 }
