@@ -33,10 +33,14 @@ def incoming_sms():
     if body == 'call':
         resp.message("Alright! We're going to connect you with someone as soon as possible. We'll send some conversation starters, and we'll call you when we're ready!")
         resp.message('CONVERSATION STARTERS: What is your neighborhood like?')
-        user = User.create_user("markus aurielous", from_number, True)        
+        user = User.get_user(from_number)
+        if not user:
+            user = User.create_user("markus aurielous", from_number, True)
+        else:
+            User.add_to_queue(user)
         if not user:
             logging.log(logging.INFO, "incoming_sms: " + str(user))
-        logging.log(logging.INFO, "incoming_sms: " + user.phonenumber)  
+        logging.log(logging.INFO, "incoming_sms: " + user.phonenumber)
         if User.check_queue():
             call(from_number)
     elif body == 'start':
@@ -49,7 +53,7 @@ def incoming_sms():
 @app.route("/call", methods=["POST"])
 def call_handler():
     logging.log(logging.INFO, "call_handler:")
-    from_number = request.values.get("From", None)
+    from_number = request.values.get("To", None)
     User.remove_user_from_queue(from_number)
 
     resp = VoiceResponse()

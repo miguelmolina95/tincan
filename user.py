@@ -92,6 +92,7 @@ class User(ndb.Model):
     # remove user from queue
     @staticmethod
     def remove_user_from_queue(phonenumber):
+        logging.log(logging.INFO, "remove_user_from_queue: phonenumber=" + phonenumber) 
         user = User.get_user(phonenumber)
         if not user:
             return False
