@@ -1,11 +1,17 @@
 from __future__ import with_statement   # Only necessary for Python 2.5
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, render_template
 from twilio.twiml.voice_response import VoiceResponse, Gather
 from twilio.twiml.messaging_response import MessagingResponse
 from datetime import datetime
+from twilio.rest import Client
 import time
+import logging
 
 app = Flask(__name__)
+
+@app.route("/sms", methods=['GET'])
+def index():
+	return render_template('index.html')
 
 @app.route("/sms", methods=['POST'])
 def incoming_sms():
@@ -46,7 +52,7 @@ def call_handler():
 
 	return str(resp)
 
-@app.route("/handle-key", methods=['GET', 'POST'])
+@app.route("/handle-key", methods=['POST'])
 def handle_key():
 	"""Handle key press from a user."""
 
@@ -65,17 +71,18 @@ def handle_key():
 	else:
 		return redirect("/")
 
-def worker(from_number):
-	from twilio.rest import Client
-	account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
-	auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
-	client = Client(account_sid, auth_token)
-	call = client.calls.create(to=from_number, from_="+15104471108", url="https://code2040hack-tincan.appspot.com/call")
-
 def call(from_number):
 	# time.sleep(60)
-	import threading
-	t = threading.Thread(target=worker, args=(from_number,))
+
+	logging.log(logging.INFO, from_number)
+
+	account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
+	auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
+
+	logging.log(logging.INFO, from_number)
+	client = Client(account_sid, auth_token)
+
+	call = client.calls.create(to=from_number, from_="+15104471108", url="https://code2040hack-tincan.appspot.com/call")
 
 if __name__ == "__main__":
 	app.run(debug=True)
