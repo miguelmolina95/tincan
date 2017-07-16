@@ -53,3 +53,4 @@ Bianca Colon - _Backend_
 Michael A - _Backend_
 
 ## Acknowledgments:
+Jenna Quindica
