@@ -66,7 +66,7 @@ def calling_your_mom():
 	logging.log(logging.INFO, from_number)
 	client = Client(account_sid, auth_token)
 	
-	call = client.calls.create(to=from_number, from_="+15104471108", url="http://code2040hack-tincan.appspot.com/call")
+	call = client.calls.create(to=from_number, from_="+15104471108", url="https://code2040hack-tincan.appspot.com/call")
 	logging.log(logging.INFO, from_number)
 	
 	return "Hola"

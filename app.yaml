@@ -8,4 +8,8 @@ handlers:
   static_dir: static
 - url: /.*
   script: main.app
+
+libraries:
+- name: ssl
+  version: latest
 # [END handlers]
