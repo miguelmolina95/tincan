@@ -4,13 +4,8 @@ from twilio.twiml.voice_response import VoiceResponse, Gather
 from twilio.twiml.messaging_response import MessagingResponse
 from datetime import datetime
 import time
-from twilio.rest import Client
 
 app = Flask(__name__)
-
-account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
-auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
-client = Client(account_sid, auth_token)
 
 @app.route("/sms", methods=['POST'])
 def incoming_sms():
@@ -31,7 +26,7 @@ def incoming_sms():
 	elif body == 'start':
 		resp.message("Welcome to TinCan! When you're ready to start a call, please text the word CALL.")
 	else:
-		resp.message("Sorry, I didn't understand that.")
+		resp.message("Sorry, I didn't understand that. Try either START or CALL")
 
 	return str(resp)
 
@@ -71,10 +66,14 @@ def handle_key():
 		return redirect("/")
 
 def call(from_number):
-	#time.sleep(60)
-	call = client.calls.create(to=from_number,
-				   from_="+15104471108",
-				   url="https://code2040hack-tincan.appspot.com/call")
+	# time.sleep(60)
+
+	from twilio.rest import Client
+	account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
+	auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
+	client = Client(account_sid, auth_token)
+
+	call = client.calls.create(to=from_number, from_="+15104471108", url="https://code2040hack-tincan.appspot.com/call")
 
 if __name__ == "__main__":
 	app.run(debug=True)
