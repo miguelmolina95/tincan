@@ -5,8 +5,10 @@ from twilio.twiml.messaging_response import MessagingResponse
 from datetime import datetime
 from twilio.rest import Client
 from user import User
+from google.appengine.api import taskqueue  # Tasks
 import time
 import logging
+
 
 app = Flask(__name__)
 
@@ -52,6 +54,22 @@ def call_handler():
     resp.append(g)
 
     return str(resp)
+
+@app.route("/celia", methods=['POST'])
+def calling_your_mom():
+	
+	from_number = request.values.get('to', None)
+
+	account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
+	auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
+	
+	logging.log(logging.INFO, from_number)
+	client = Client(account_sid, auth_token)
+	
+	call = client.calls.create(to=from_number, from_="+15104471108", url="http://code2040hack-tincan.appspot.com/call")
+	logging.log(logging.INFO, from_number)
+	
+	return "Hola"
 
 @app.route("/handle-key", methods=['POST'])
 def handle_key():
@@ -114,15 +132,19 @@ def queue_to_string(queue):
 def call(from_number):
 	# time.sleep(60)
 
-	logging.log(logging.INFO, from_number)
-
-	account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
-	auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
+	#account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
+	#auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
 
 	logging.log(logging.INFO, from_number)
-	client = Client(account_sid, auth_token)
+	#client = Client(account_sid, auth_token)
 
-	call = client.calls.create(to=from_number, from_="+15104471108", url="https://code2040hack-tincan.appspot.com/call")
+	#call = client.calls.create(to=from_number, from_="+15104471108", url="https://code2040hack-tincan.appspot.com/call")
+
+	task = taskqueue.add(
+            url='/celia',
+            target='main',
+            params={'to': from_number})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
