@@ -28,4 +28,8 @@ venv
 *.pyc
 build
 env
-
+/lib
+/lib/*
+.cache
+.vscode
+index.yaml
