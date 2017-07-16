@@ -20,6 +20,11 @@ class User(ndb.Model):
     # creates a user, saves to database, and returns the user
     @staticmethod
     def create_user(name, phonenumber, in_queue=False):
+        user = User.get_user(phonenumber)
+        if user:
+            logging.log(logging.INFO, "create_user: " + user.phonenumber)            
+            return user
+        logging.log(logging.INFO, "create_user: " + str(user))
         user = User(
             name=name,
             phonenumber=phonenumber, # TODO: needs validation
@@ -56,7 +61,9 @@ class User(ndb.Model):
         logging.log(logging.INFO, "get_queue")
         # get all users that are in_queue, ordered in ascending by date
         query = User.query(User.in_queue == True).order(User.queue_join_date)
+        logging.log(logging.INFO, "get_queue: got query")
         users = query.fetch(User.MAX_QUERY)
+        logging.log(logging.INFO, "get_queue: fetching query")
         # create dummy users
         if DEVEOPING and not users:
             grr = User.create_user("Grrr", "+15101234567", True)
@@ -65,7 +72,13 @@ class User(ndb.Model):
             ndb.put_multi(users)
         logging.log(logging.INFO, "get_queue: query returned " + str(len(users)))
         return users
-    
+
+    # check if there enough people in the queue to hold a call, returns bool
+    @staticmethod
+    def check_queue():
+        queue = User.get_queue()
+        return len(queue) > 1
+
     # get user by phonenumber, returns user
     @staticmethod
     def get_user(phonenumber):
@@ -75,3 +88,22 @@ class User(ndb.Model):
         if not users:
             return False
         return users[0]
+
+    # remove user from queue
+    @staticmethod
+    def remove_user_from_queue(phonenumber):
+        user = User.get_user(phonenumber)
+        if not user:
+            return False
+        User.remove_from_queue(user)
+        return True
+
+    # pop queue, returns oldest user in the queue
+    @staticmethod
+    def pop_queue():
+        users = User.get_queue()
+        if not users:
+            return False
+        user = users[0]
+        User.remove_from_queue(user)
+        return user
