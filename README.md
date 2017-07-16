@@ -38,7 +38,6 @@ $ deactivate
 
 [Google Cloud Platform](https://cloud.google.com/) to host our app.
 
-[Firebase](https://firebase.google.com/) for database. 
 
 ## Authors:
 
