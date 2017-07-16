@@ -12,7 +12,7 @@ import logging
 
 app = Flask(__name__)
 
-@app.route("/sms", methods=['GET'])
+@app.route("/", methods=['GET'])
 def index():
 	return render_template('index.html')
 
