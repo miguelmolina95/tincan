@@ -59,8 +59,8 @@ class User(ndb.Model):
         users = query.fetch(User.MAX_QUERY)
         # create dummy users
         if DEVEOPING and not users:
-            grr = User.create_user("Grrr", "5101234567", True)
-            zim = User.create_user("Zim", "5101114444", True)
+            grr = User.create_user("Grrr", "+15101234567", True)
+            zim = User.create_user("Zim", "+15101114444", True)
             users = [grr, zim]
             ndb.put_multi(users)
         logging.log(logging.INFO, "get_queue: query returned " + str(len(users)))
