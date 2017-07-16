@@ -33,11 +33,11 @@ a {
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
-  color: #fdcc52;
+  color: #c61128;
 }
 
 a:hover, a:focus {
-  color: #fcbd20;
+  color: #c61128;
 }
 
 hr {
@@ -78,11 +78,11 @@ p {
   font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
   font-weight: 200;
   letter-spacing: 1px;
-  color: #fdcc52;
+  color: #c61128;
 }
 
 .navbar-default .navbar-header .navbar-brand:hover, .navbar-default .navbar-header .navbar-brand:focus {
-  color: #fcbd20;
+  color: #c61128;
 }
 
 .navbar-default .navbar-header .navbar-toggle {
@@ -103,7 +103,7 @@ p {
 }
 
 .navbar-default .nav>li>a:hover, .navbar-default .nav>li>a:focus:hover {
-  color: #fdcc52;
+  color: #c61128;
 }
 
 .navbar-default .nav>li.active>a, .navbar-default .nav>li.active>a:focus {
@@ -140,13 +140,13 @@ p {
     color: #222222;
   }
   .navbar-default.affix .navbar-header .navbar-brand:hover, .navbar-default.affix .navbar-header .navbar-brand:focus {
-    color: #fdcc52;
+    color: #c61128;
   }
   .navbar-default.affix .nav>li>a, .navbar-default.affix .nav>li>a:focus {
     color: #222222;
   }
   .navbar-default.affix .nav>li>a:hover, .navbar-default.affix .nav>li>a:focus:hover {
-    color: #fdcc52;
+    color: #c61128;
   }
 }
 
@@ -386,7 +386,7 @@ section.contact {
 
 section.contact h2 {
   margin-top: 0;
-  margin-bottom: 25px;
+  margin-bottom: 1em;
 }
 
 section.contact h2 i {
@@ -463,7 +463,7 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 }
 
 .text-primary {
-  color: #fdcc52;
+  color: #c61128;
 }
 
 .no-gutter>[class*='col-'] {
@@ -488,6 +488,18 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
   text-transform: uppercase;
   letter-spacing: 2px;
   border-radius: 300px;
+}
+
+.btn-github {
+  color: black;
+  border-color: black;
+  margin-top: 4em;
+}
+
+.btn-github:hover, .btn-outline:focus, .btn-outline:active, .btn-outline.active {
+  color: white;
+  background-color: #d73925;
+  border-color: #d73925;
 }
 
 .btn-xl {
@@ -549,7 +561,7 @@ body {
     max-width: none;
   }
   .center {
-    margin-top: 5em;
+    margin-top: 4em;
   }
   .text-to-start div h3 {
     font-size: 2em;
