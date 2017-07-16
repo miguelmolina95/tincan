@@ -17,6 +17,10 @@ handlers:
   static_dir: templates/lib
 - url: /templates/js
   static_dir: templates/js
+- url: /templates/img/profile-images
+  static_dir: templates/img/profile-images
+- url: /templates/img/screenshots
+  static_dir: templates/img/screenshots
 - url: /.*
   script: main.app
 
