@@ -1,0 +1,5 @@
+queue:
+- name: my-push-queue
+  rate: 1/s
+
+# https://cloud.google.com/appengine/docs/standard/python/config/queueref
