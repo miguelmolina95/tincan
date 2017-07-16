@@ -1,18 +1,11 @@
 # TinCan
-![logo](https://user-images.githubusercontent.com/7967489/28242531-746e64b2-6963-11e7-9aff-6f03324ba9aa.png)
+![salmon icon](https://user-images.githubusercontent.com/7967489/28243525-358c9394-6982-11e7-8734-1abe5466649b.png)
 
 An application that connects immigrants who want to practice English with their peers.
 TinCan connects people at the same level of language fluency anonymously to talk over the phone and practice speaking to other people.
 
-what:
-
-where:
-
-who: Who's our target? People that is learning or want to improve their conversational English. 
-
-when:
-
-why: 
+## Keynote Presentation:
+[Click here to download from Google Drive.](https://drive.google.com/file/d/0B4md_ooHpY8jMUFoX2JDSU9rcE0/view?usp=sharing)
 
 ## Prerequisites:
 
@@ -39,10 +32,6 @@ To get out of virutalenv:
 $ deactivate
 ```
 
-## Non-MVP Mockup:
-
-![sms_v1](https://user-images.githubusercontent.com/7967489/28241582-324735a8-694c-11e7-8966-57f07da134fc.png)
-
 ## Resources:
 
 [Twilio](https://www.twilio.com/what-is-cloud-communications?) add messaging and voice for our app.
@@ -53,7 +42,7 @@ $ deactivate
 
 ## Authors:
 
-Teresa Ibarra - _Frontend_
+Teresa Ibarra - _Frontend & Design_
 
 Samuel Yanez - _Frontend_
 
@@ -64,3 +53,4 @@ Bianca Colon - _Backend_
 Michael A - _Backend_
 
 ## Acknowledgments:
+Jenna Quindica
