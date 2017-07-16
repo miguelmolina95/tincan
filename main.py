@@ -65,15 +65,17 @@ def handle_key():
 	else:
 		return redirect("/")
 
-def call(from_number):
-	# time.sleep(60)
-
+def worker(from_number):
 	from twilio.rest import Client
 	account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
 	auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
 	client = Client(account_sid, auth_token)
-
 	call = client.calls.create(to=from_number, from_="+15104471108", url="https://code2040hack-tincan.appspot.com/call")
+
+def call(from_number):
+	# time.sleep(60)
+	import threading
+	t = threading.Thread(target=worker, args=(from_number,))
 
 if __name__ == "__main__":
 	app.run(debug=True)
