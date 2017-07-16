@@ -1,4 +1,3 @@
-application: code2040hack-tincan
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -7,6 +6,25 @@ threadsafe: true
 handlers:
 - url: /static
   static_dir: static
+- url: /templates
+  static_dir: templates
+  application_readable: true
+- url: /templates/css
+  static_dir: templates/css
+- url: /templates/img
+  static_dir: templates/img
+- url: /templates/lib
+  static_dir: templates/lib
+- url: /templates/js
+  static_dir: templates/js
+- url: /templates/img/profile-images
+  static_dir: templates/img/profile-images
+- url: /templates/img/screenshots
+  static_dir: templates/img/screenshots
 - url: /.*
   script: main.app
+
+libraries:
+- name: ssl
+  version: latest
 # [END handlers]

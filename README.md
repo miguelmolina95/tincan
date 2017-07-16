@@ -4,8 +4,15 @@
 An application that connects immigrants who want to practice English with their peers.
 TinCan connects people at the same level of language fluency anonymously to talk over the phone and practice speaking to other people.
 
+## Website
+[Landing page](https://code2040hack-tincan.appspot.com/)
+
 ## Keynote Presentation:
+[Google Slides deck](https://docs.google.com/presentation/d/1Ls_xUKCQrj8J9ErXKkRe-9HBK0_n3rSR1zcJgKSbqQQ/edit?usp=sharing)
+
 [Click here to download from Google Drive.](https://drive.google.com/file/d/0B4md_ooHpY8jMUFoX2JDSU9rcE0/view?usp=sharing)
+
+
 
 ## Prerequisites:
 
@@ -38,11 +45,9 @@ $ deactivate
 
 [Google Cloud Platform](https://cloud.google.com/) to host our app.
 
-[Firebase](https://firebase.google.com/) for database. 
-
 ## Authors:
 
-Teresa Ibarra - _Frontend & Design_
+Teresa Ibarra - _Frontend_
 
 Samuel Yanez - _Frontend_
 
@@ -53,4 +58,7 @@ Bianca Colon - _Backend_
 Michael A - _Backend_
 
 ## Acknowledgments:
+
 Jenna Quindica
+
+Jacqueline Garcia

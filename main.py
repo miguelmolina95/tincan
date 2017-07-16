@@ -5,14 +5,16 @@ from twilio.twiml.messaging_response import MessagingResponse
 from datetime import datetime
 from twilio.rest import Client
 from user import User
+from google.appengine.api import taskqueue  # Tasks
 import time
 import logging
+
 
 app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def index():
-	return render_template('index.html')
+    return render_template('index.html')
 
 @app.route("/sms", methods=['POST'])
 def incoming_sms():
@@ -22,6 +24,8 @@ def incoming_sms():
     body = request.values.get('Body', None).lower()
     timestamp = str(datetime.now())
 
+    logging.log(logging.INFO, "incoming_sms: " + from_number + " " + body)
+
     # Start our TwiML response
     resp = MessagingResponse()
 
@@ -29,7 +33,16 @@ def incoming_sms():
     if body == 'call':
         resp.message("Alright! We're going to connect you with someone as soon as possible. We'll send some conversation starters, and we'll call you when we're ready!")
         resp.message('CONVERSATION STARTERS: What is your neighborhood like?')
-        call(from_number)
+        user = User.get_user(from_number)
+        if not user:
+            user = User.create_user("markus aurielous", from_number, True)
+        else:
+            User.add_to_queue(user)
+        if not user:
+            logging.log(logging.INFO, "incoming_sms: " + str(user))
+        logging.log(logging.INFO, "incoming_sms: " + user.phonenumber)
+        if User.check_queue():
+            call(from_number)
     elif body == 'start':
         resp.message("Welcome to TinCan! When you're ready to start a call, please text the word CALL.")
     else:
@@ -37,9 +50,11 @@ def incoming_sms():
 
     return str(resp)
 
-@app.route("/call", methods=['POST'])
+@app.route("/call", methods=["POST"])
 def call_handler():
-    from_number = request.values.get('From', None)
+    logging.log(logging.INFO, "call_handler:")
+    from_number = request.values.get("To", None)
+    User.remove_user_from_queue(from_number)
 
     resp = VoiceResponse()
     # Greet the caller by name
@@ -53,16 +68,40 @@ def call_handler():
 
     return str(resp)
 
-@app.route("/handle-key", methods=['POST'])
+@app.route("/celia", methods=["POST"])
+def calling_your_mom():
+
+    from_number = request.values.get("from", None)
+    logging.log(logging.INFO, "calling_your_mom: " + from_number)
+
+    account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
+    auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
+
+    logging.log(logging.INFO, from_number)
+    client = Client(account_sid, auth_token)
+
+    call = client.calls.create(to=from_number, from_="+15104471108", url="https://code2040hack-tincan.appspot.com/call")
+    logging.log(logging.INFO, from_number)
+
+    return "Hola"
+
+@app.route("/handle-key", methods=["POST"])
 def handle_key():
     """Handle key press from a user."""
 
     # Get the digit pressed by the user
-    digit_pressed = request.values.get('Digits', None)
+    digit_pressed = request.values.get("Digits", None)
+    # BUGG: can't get number from reuqest body
+    # from_number = request.value.get("From", None)
     if digit_pressed == "1":
         resp = VoiceResponse()
-        # Dial demo number - connect that number to the incoming caller.
-        resp.dial("+14158670706")
+        user = User.pop_queue()
+        if not user:
+            logging.log(logging.INFO, "handle_key: " + str(user))
+            return "no one else in queue"
+        logging.log(logging.INFO, "handle_key: " + user.phonenumber)
+        # Dial number - connect that number to the incoming caller.
+        resp.dial(user.phonenumber)
         # If the dial fails:
         resp.say("The call failed, or the remote party hung up. Goodbye.")
 
@@ -108,21 +147,16 @@ def queue_to_string(queue):
     names = '</br>'
     for user in queue:
         names += user.name + ' '
-        names += user.queue_join_date.strftime('%x') + '</br>'
+        names += user.queue_join_date.strftime('%x %X') + '</br>'
     return names
 
 def call(from_number):
-	# time.sleep(60)
+    logging.log(logging.INFO, from_number)
+    task = taskqueue.add(
+        url='/celia',
+        target='main',
+        params={'from': from_number})
 
-	logging.log(logging.INFO, from_number)
-
-	account_sid = "AC9d771823f9faeac7a14c1dc6aa61b575"
-	auth_token = "3844c8588ee16a4c6c41af767dd03cc7"
-
-	logging.log(logging.INFO, from_number)
-	client = Client(account_sid, auth_token)
-
-	call = client.calls.create(to=from_number, from_="+15104471108", url="https://code2040hack-tincan.appspot.com/call")
 
 if __name__ == "__main__":
     app.run(debug=True)
